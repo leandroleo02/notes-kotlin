@@ -11,6 +11,16 @@ class CsvNotesRepository(private val csvReader: CsvReader): NotesRepository {
 
     override fun retrieveAll(): List<Note> {
         return csvReader.readFile(fileUrl.path)
-                .map { line -> Note(line[0], line[1]) }
+                .map(::toNotes)
+    }
+
+    override fun findById(id: String): Note? {
+        return csvReader.readFile(fileUrl.path)
+                .map(::toNotes)
+                .find { note -> note.id == id }
+    }
+
+    private fun toNotes(line: Array<String>): Note {
+        return Note(line[0], line[1])
     }
 }
