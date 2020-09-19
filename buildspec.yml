@@ -7,8 +7,9 @@ phases:
   build:
     commands:
       - java -version
-      - gradle assemble
+      - ./gradlew test
+      - ./gradlew assemble
 artifacts:
   files:
-    - '**/*'
+    - '**/*.jar'
   base-directory: 'build/libs'
