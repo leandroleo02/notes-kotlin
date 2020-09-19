@@ -91,7 +91,7 @@ resource "aws_eip" "webserver" {
 
 resource "aws_lb_target_group" "main" {
   name     = "notes-webservers"
-  port     = 80
+  port     = 15000
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
 }
@@ -99,5 +99,5 @@ resource "aws_lb_target_group" "main" {
 resource "aws_lb_target_group_attachment" "main" {
   target_group_arn = aws_lb_target_group.main.arn
   target_id        = aws_instance.webserver.id
-  port             = 80
+  port             = 15000
 }
