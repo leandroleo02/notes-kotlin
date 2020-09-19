@@ -5,11 +5,12 @@ import org.junit.jupiter.api.Test
 
 class CsvNotesRepositoryTest {
 
-    private val csvNotesRepository: CsvNotesRepository = CsvNotesRepository()
+    private val csvReader = CsvReader()
+    private val csvNotesRepository = CsvNotesRepository(csvReader)
 
     @Test
     fun readAllNotes() {
         val notes = csvNotesRepository.retrieveAll()
-        assertThat(notes).hasSize(4)
+        assertThat(notes).hasSize(5)
     }
 }

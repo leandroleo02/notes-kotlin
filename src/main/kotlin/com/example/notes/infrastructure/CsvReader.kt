@@ -1,12 +1,14 @@
 package com.example.notes.infrastructure
 
 import com.opencsv.CSVReader
+import org.springframework.stereotype.Component
 import java.io.BufferedReader
 import java.io.FileReader
 
-class CsvReader(private val filePath: String) {
+@Component
+class CsvReader {
 
-    fun readFile(): List<Array<String>> {
+    fun readFile(filePath: String): List<Array<String>> {
         val fileReader = BufferedReader(FileReader(filePath))
         val csvReader = CSVReader(fileReader)
         csvReader.skip(1)

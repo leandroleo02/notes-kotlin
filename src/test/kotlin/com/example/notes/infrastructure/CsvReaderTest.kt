@@ -8,14 +8,14 @@ class CsvReaderTest {
 
     @Test
     fun throwsExceptionWhenFileNotExists() {
-        val csvReader = CsvReader("notes.csv")
-        assertThatIOException().isThrownBy { csvReader.readFile() }
+        val csvReader = CsvReader()
+        assertThatIOException().isThrownBy { csvReader.readFile("notes.csv") }
     }
 
     @Test
     fun readDataFromFile() {
         val fileUrl = this::class.java.classLoader.getResource("notes/notes.csv")
-        val csvReader = CsvReader(fileUrl.path)
-        assertThat(csvReader.readFile()).hasSize(5)
+        val csvReader = CsvReader()
+        assertThat(csvReader.readFile(fileUrl.path)).hasSize(5)
     }
 }
