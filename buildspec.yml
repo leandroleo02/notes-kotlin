@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: openjdk11
+  build:
+    commands:
+      - java -version
+      - gradle assemble
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'build/libs'
