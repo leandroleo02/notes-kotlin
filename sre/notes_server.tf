@@ -66,21 +66,21 @@ resource "aws_instance" "webserver" {
     Name = "webserver"
   }
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt update",
-      "sudo apt --fix-broken install",
-      "sudo apt install default-jre -y",
-      "java -version"
-    ]
-
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = file("~/Downloads/root.pem")
-      host        = self.public_ip
-    }
-  }
+//  provisioner "remote-exec" {
+//    inline = [
+//      "sudo apt update",
+//      "sudo apt --fix-broken install",
+//      "sudo apt install default-jre -y",
+//      "java -version"
+//    ]
+//
+//    connection {
+//      type        = "ssh"
+//      user        = "ubuntu"
+//      private_key = file("~/Downloads/root.pem")
+//      host        = self.public_ip
+//    }
+//  }
 }
 
 resource "aws_eip" "webserver" {
