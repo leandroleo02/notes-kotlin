@@ -16,4 +16,5 @@ artifacts:
   files:
     - build/libs/notes-0.0.1-SNAPSHOT.jar
     - appspec.yml
+    - scripts/*
   discard-paths: yes
