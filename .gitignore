@@ -35,7 +35,7 @@ out/
 
 ### Terraform ###
 # Local .terraform directories
-**/sre/.terraform/*
+**/sre/**/.terraform/*
 
 # .tfstate files
 *.tfstate

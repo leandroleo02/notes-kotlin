@@ -35,14 +35,21 @@ resource "aws_route_table_association" "main" {
   route_table_id = aws_route_table.default.id
 }
 
-resource "aws_security_group" "allow_ssh" {
-  name = "Allow all ssh connections"
+resource "aws_security_group" "webserver_traffic_allowed" {
+  name = "Allow ssh and http connections"
   vpc_id = aws_vpc.main.id
 
   ingress {
     from_port = 22
     protocol = "tcp"
     to_port = 22
+    cidr_blocks = ["187.20.177.144/32"]
+  }
+
+  ingress {
+    from_port = 0
+    protocol = "tcp"
+    to_port = 15000
     cidr_blocks = ["187.20.177.144/32"]
   }
 
@@ -55,32 +62,22 @@ resource "aws_security_group" "allow_ssh" {
 }
 
 resource "aws_instance" "webserver" {
-  ami           = "ami-0817d428a6fb68645"
+  ami           = "ami-0dba2cb6798deb6d8"
   instance_type = "t2.medium"
   key_name      = "root"
   subnet_id     = aws_subnet.main.id
-  security_groups = [aws_security_group.allow_ssh.id]
+  vpc_security_group_ids = [aws_security_group.webserver_traffic_allowed.id]
   associate_public_ip_address = true
 
   tags = {
     Name = "webserver"
   }
 
-//  provisioner "remote-exec" {
-//    inline = [
-//      "sudo apt update",
-//      "sudo apt --fix-broken install",
-//      "sudo apt install default-jre -y",
-//      "java -version"
-//    ]
-//
-//    connection {
-//      type        = "ssh"
-//      user        = "ubuntu"
-//      private_key = file("~/Downloads/root.pem")
-//      host        = self.public_ip
-//    }
-//  }
+  user_data = <<EOT
+#!/bin/bash
+sudo apt update
+sudo apt install openjdk-11-jre -y
+EOT
 }
 
 resource "aws_eip" "webserver" {

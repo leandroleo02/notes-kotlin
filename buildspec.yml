@@ -6,10 +6,14 @@ phases:
       java: corretto11
   build:
     commands:
-      - java -version
+      - echo Build started on `date`
       - ./gradlew test
+  post_build:
+    commands:
+      - echo Build completed on `date`
       - ./gradlew assemble
 artifacts:
   files:
-    - '**/*.jar'
-  base-directory: 'build/libs'
+    - build/libs/notes-0.0.1-SNAPSHOT.jar
+    - appspec.yml
+  discard-paths: yes
