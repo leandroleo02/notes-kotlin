@@ -12,6 +12,12 @@ phases:
     commands:
       - echo Build completed on `date`
       - ./gradlew assemble
+
+cache:
+  paths:
+    - '~/.gradle/caches'
+    - '~/.gradle/wrapper'
+
 artifacts:
   files:
     - build/libs/notes-0.0.1-SNAPSHOT.jar
