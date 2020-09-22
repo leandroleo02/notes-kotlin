@@ -41,3 +41,15 @@ tasks.withType<KotlinCompile> {
 		jvmTarget = "11"
 	}
 }
+
+tasks.register<Copy>("unpack") {
+	val zipFile = file("${buildDir}/libs/${rootProject.name}-${version}.jar")
+	val outputDir = file("${buildDir}/dependency")
+
+	from(zipTree(zipFile))
+	into(outputDir)
+}
+
+tasks.assemble {
+	finalizedBy(tasks["unpack"])
+}
