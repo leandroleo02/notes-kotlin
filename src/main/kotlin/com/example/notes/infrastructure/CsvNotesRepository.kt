@@ -1,6 +1,7 @@
 package com.example.notes.infrastructure
 
 import com.example.notes.domain.Note
+import com.example.notes.domain.Notes
 import com.example.notes.domain.NotesRepository
 import org.springframework.stereotype.Repository
 import java.io.InputStream
@@ -10,16 +11,20 @@ class CsvNotesRepository(private val csvReader: CsvReader): NotesRepository {
 
     override fun retrieveAll(): List<Note> {
         return csvReader.readFile(file()!!)
-                .map(::toNotes)
+                .map(::toNote)
+    }
+
+    override fun retrieveAllNew(): Notes {
+        return Notes(retrieveAll())
     }
 
     override fun findById(id: String): Note? {
         return csvReader.readFile(file()!!)
-                .map(::toNotes)
+                .map(::toNote)
                 .find { note -> note.id == id }
     }
 
-    private fun toNotes(line: Array<String>): Note {
+    private fun toNote(line: Array<String>): Note {
         return Note(line[0], line[1], line[2], line[3])
     }
 

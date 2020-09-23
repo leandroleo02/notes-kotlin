@@ -16,6 +16,12 @@ class CsvNotesRepositoryTest {
     }
 
     @Test
+    fun readAllNotesNew() {
+        val notes = csvNotesRepository.retrieveAllNew()
+        assertThat(notes).isNotNull
+    }
+
+    @Test
     fun findNoteById() {
         val note = csvNotesRepository.findById("5")
         assertThat(note).isNotNull
