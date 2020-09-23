@@ -21,6 +21,9 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("com.opencsv:opencsv:5.2")
+	implementation("org.slf4j:slf4j-api:1.7.30")
+	implementation("ch.qos.logback:logback-classic:1.2.3")
+	implementation("ch.qos.logback:logback-core:1.2.3")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
