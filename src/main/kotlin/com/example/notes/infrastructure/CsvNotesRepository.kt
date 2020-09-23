@@ -9,12 +9,7 @@ import java.io.InputStream
 @Repository
 class CsvNotesRepository(private val csvReader: CsvReader): NotesRepository {
 
-    override fun retrieveAll(): List<Note> {
-        return csvReader.readFile(file()!!)
-                .map(::toNote)
-    }
-
-    override fun retrieveAllNew(): Notes {
+    override fun retrieveAll(): Notes {
         val notes = csvReader.readFile(file()!!)
                 .map(::toNote)
         return Notes(notes)

@@ -22,7 +22,8 @@ class NotesController(private val notesRepository: NotesRepository) {
     @GetMapping
     fun retrieveNotes(): List<NotesResponse> {
         logger.info("Retrieving Notes")
-        return notesRepository.retrieveAllNew().convert { NotesResponse(it) }
+        return notesRepository.retrieveAll()
+                .convert { NotesResponse(it) }
     }
 
     @GetMapping("{id}")

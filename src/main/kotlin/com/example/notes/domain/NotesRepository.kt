@@ -2,7 +2,6 @@ package com.example.notes.domain
 
 interface NotesRepository {
 
-    fun retrieveAll(): List<Note>
-    fun retrieveAllNew(): Notes
+    fun retrieveAll(): Notes
     fun findById(id: String): Note?
 }

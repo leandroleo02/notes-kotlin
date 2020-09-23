@@ -11,7 +11,7 @@ class CsvNotesRepositoryTest {
 
     @Test
     fun readAllNotesNew() {
-        val notes = csvNotesRepository.retrieveAllNew()
+        val notes = csvNotesRepository.retrieveAll()
         assertThat(notes).isNotNull
     }
 
