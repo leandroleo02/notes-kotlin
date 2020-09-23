@@ -1,7 +1,5 @@
 package com.example.notes.domain
 
-import com.example.notes.infrastructure.CsvNotesRepository
-import com.example.notes.infrastructure.CsvReader
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -12,9 +10,7 @@ class NotesTest {
 
     @BeforeEach
     fun setUp() {
-        val csvReader = CsvReader()
-        val csvNotesRepository = CsvNotesRepository(csvReader)
-        notes = Notes(csvNotesRepository.retrieveAll())
+        notes = Notes(noteFixture())
     }
 
     @Test
@@ -33,5 +29,14 @@ class NotesTest {
     fun returnOnlyTitlesFromNotes() {
         val titles = notes.extractTitles()
         assertThat(titles).hasSize(5)
+    }
+
+    private fun noteFixture(): List<Note> {
+        return listOf(
+            Note("1", "Learning","green","First Note in Kotlin"),
+            Note("2", "Goku","orange","Olá, eu sou o Goku"),
+            Note("3", "Tyrion","gold","I drink and I know things"),
+            Note("4", "Funny","gold","His legs flail about as if independent from his body!"),
+            Note("5", "Cold","white","Winter is coming!"),)
     }
 }
