@@ -5,15 +5,16 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
+import java.util.*
 
 class MongoNotesRepositoryTest {
 
     private lateinit var mongoNotesRepository: MongoNotesRepository
-    private lateinit var mockMongoDelegate: MongoNotesRepository.MongoRepositoryDelegate
+    private lateinit var mockMongoDelegate: MongoRepositoryDelegate
 
     @BeforeEach
     fun setTup() {
-        mockMongoDelegate = Mockito.mock(MongoNotesRepository.MongoRepositoryDelegate::class.java)
+        mockMongoDelegate = Mockito.mock(MongoRepositoryDelegate::class.java)
         mongoNotesRepository = MongoNotesRepository(mockMongoDelegate)
     }
 
@@ -24,6 +25,13 @@ class MongoNotesRepositoryTest {
         assertThat(notes).isNotNull
     }
 
+    @Test
+    fun findNoteById() {
+        Mockito.`when`(mockMongoDelegate.findById("5")).thenReturn(Optional.of(NoteDocument("5", "Cold","white","Winter is coming!")))
+        val note = mongoNotesRepository.findById("5")
+        assertThat(note).isNotNull
+    }
+
     private fun noteFixture(): List<NoteDocument> {
         return listOf(
                 NoteDocument("1", "Learning","green","First Note in Kotlin"),
@@ -32,18 +40,4 @@ class MongoNotesRepositoryTest {
                 NoteDocument("4", "Funny","gold","His legs flail about as if independent from his body!"),
                 NoteDocument("5", "Cold","white","Winter is coming!"),)
     }
-
-//    @Test
-//    fun findNoteById() {
-//        val note = csvNotesRepository.findById("5")
-//        assertThat(note).isNotNull
-//    }
-//
-//    @Test
-//    fun findNoteWithAllValues() {
-//        val note = csvNotesRepository.findById("5")
-//        assertThat(note)
-//                .usingRecursiveComparison()
-//                .isEqualTo(Note("5", "Cold", "white", "Winter is coming!"))
-//    }
 }

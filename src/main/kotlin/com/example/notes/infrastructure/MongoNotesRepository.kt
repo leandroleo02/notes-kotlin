@@ -17,13 +17,15 @@ class MongoNotesRepository(private val mongoRepositoryDelegate: MongoRepositoryD
     }
 
     override fun findById(id: String): Note? {
-        return null
+        return mongoRepositoryDelegate.findById(id)
+                .map(::toNote)
+                .orElse(null)
     }
 
     private fun toNote(noteDocument: NoteDocument): Note {
         return Note(noteDocument.id, noteDocument.title, noteDocument.category, noteDocument.text)
     }
-
-    @Repository
-    interface MongoRepositoryDelegate: MongoRepository<NoteDocument, String>
 }
+
+@Repository
+interface MongoRepositoryDelegate: MongoRepository<NoteDocument, String>

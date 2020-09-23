@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("notes")
-class NotesController(private val notesRepository: NotesRepository) {
+class NotesController(private val csvNotesRepository: NotesRepository) {
 
     companion object: Logging {
         val logger = logger()
@@ -22,14 +22,14 @@ class NotesController(private val notesRepository: NotesRepository) {
     @GetMapping
     fun retrieveNotes(): List<NotesResponse> {
         logger.info("Retrieving Notes")
-        return notesRepository.retrieveAll()
+        return csvNotesRepository.retrieveAll()
                 .convert { NotesResponse(it) }
     }
 
     @GetMapping("{id}")
     fun getNoteById(@PathVariable("id") id: String): ResponseEntity<NotesResponse> {
         logger.info("Retrieving Note $id")
-        return notesRepository.findById(id)?.let {
+        return csvNotesRepository.findById(id)?.let {
             ResponseEntity(NotesResponse(it), HttpStatus.OK)
         } ?: ResponseEntity(HttpStatus.NOT_FOUND)
     }
