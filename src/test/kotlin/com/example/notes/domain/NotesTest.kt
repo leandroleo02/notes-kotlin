@@ -22,4 +22,16 @@ class NotesTest {
         val notes = notes.findNotesByCategory("gold")
         assertThat(notes).hasSize(2)
     }
+
+    @Test
+    fun returnEmptyListWhenCategoryNotExists() {
+        val notes = notes.findNotesByCategory("yellow")
+        assertThat(notes).isEmpty()
+    }
+
+    @Test
+    fun returnOnlyTitlesFromNotes() {
+        val titles = notes.extractTitles()
+        assertThat(titles).hasSize(5)
+    }
 }
