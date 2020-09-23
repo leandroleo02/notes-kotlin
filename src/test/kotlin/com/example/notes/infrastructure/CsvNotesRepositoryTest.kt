@@ -10,7 +10,7 @@ class CsvNotesRepositoryTest {
     private val csvNotesRepository = CsvNotesRepository(csvReader)
 
     @Test
-    fun readAllNotesNew() {
+    fun readAllNotes() {
         val notes = csvNotesRepository.retrieveAll()
         assertThat(notes).isNotNull
     }
