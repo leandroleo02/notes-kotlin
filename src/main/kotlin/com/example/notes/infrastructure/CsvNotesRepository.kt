@@ -15,7 +15,9 @@ class CsvNotesRepository(private val csvReader: CsvReader): NotesRepository {
     }
 
     override fun retrieveAllNew(): Notes {
-        return Notes(retrieveAll())
+        val notes = csvReader.readFile(file()!!)
+                .map(::toNote)
+        return Notes(notes)
     }
 
     override fun findById(id: String): Note? {

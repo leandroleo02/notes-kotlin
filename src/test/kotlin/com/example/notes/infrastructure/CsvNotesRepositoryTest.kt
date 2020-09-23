@@ -10,12 +10,6 @@ class CsvNotesRepositoryTest {
     private val csvNotesRepository = CsvNotesRepository(csvReader)
 
     @Test
-    fun readAllNotes() {
-        val notes = csvNotesRepository.retrieveAll()
-        assertThat(notes).hasSize(5)
-    }
-
-    @Test
     fun readAllNotesNew() {
         val notes = csvNotesRepository.retrieveAllNew()
         assertThat(notes).isNotNull

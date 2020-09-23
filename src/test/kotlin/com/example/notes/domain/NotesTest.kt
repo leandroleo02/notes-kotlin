@@ -31,6 +31,14 @@ class NotesTest {
         assertThat(titles).hasSize(5)
     }
 
+    @Test
+    fun convertNotes() {
+        val notesConverted = notes.convert {
+            it.id
+        }
+        assertThat(notesConverted).contains("1", "2", "3", "4", "5")
+    }
+
     private fun noteFixture(): List<Note> {
         return listOf(
             Note("1", "Learning","green","First Note in Kotlin"),
