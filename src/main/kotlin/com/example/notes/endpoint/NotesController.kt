@@ -34,6 +34,10 @@ class NotesController(private val notesRepository: NotesRepository) {
     }
 }
 
-class NotesResponse(val id: String, val text: String) {
-    constructor(note: Note): this(note.id, note.text)
+data class NotesResponse(val id: String,
+                    val title: String,
+                    val category: String,
+                    val text: String,) {
+    constructor(note: Note):
+            this(note.id, note.title, note.category, note.text)
 }

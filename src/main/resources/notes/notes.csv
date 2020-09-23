@@ -1,5 +1,6 @@
-id,text
-1, "First Node in Kotlin"
-2, "Olá, eu sou o Goku"
-3, "I drink and I know things"
-4, "His legs flail about as if independent from his body!"
+id,title,category,text
+1, "Learning","green","First Note in Kotlin"
+2, "Goku","orange","Olá, eu sou o Goku"
+3, "Tyrion","gold","I drink and I know things"
+4, "Funny","gold","His legs flail about as if independent from his body!"
+5, "Cold","white","Winter is coming!"

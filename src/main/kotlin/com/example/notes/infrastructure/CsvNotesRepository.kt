@@ -20,7 +20,7 @@ class CsvNotesRepository(private val csvReader: CsvReader): NotesRepository {
     }
 
     private fun toNotes(line: Array<String>): Note {
-        return Note(line[0], line[1])
+        return Note(line[0], line[1], line[2], line[3])
     }
 
     private fun file(): InputStream? {
