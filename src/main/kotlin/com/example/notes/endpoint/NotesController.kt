@@ -1,9 +1,9 @@
 package com.example.notes.endpoint
 
+import com.example.notes.application.NoteService
 import com.example.notes.application.config.Logging
 import com.example.notes.application.config.logger
 import com.example.notes.domain.Note
-import com.example.notes.domain.NotesRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("notes")
-class NotesController(private val mongoNotesRepository: NotesRepository) {
+class NotesController(private val noteService: NoteService) {
 
     companion object: Logging {
         val logger = logger()
@@ -22,14 +22,14 @@ class NotesController(private val mongoNotesRepository: NotesRepository) {
     @GetMapping
     fun retrieveNotes(): List<NotesResponse> {
         logger.info("Retrieving Notes")
-        return mongoNotesRepository.retrieveAll()
+        return noteService.retrieveNotes()
                 .convert { NotesResponse(it) }
     }
 
     @GetMapping("{id}")
     fun getNoteById(@PathVariable("id") id: String): ResponseEntity<NotesResponse> {
         logger.info("Retrieving Note $id")
-        return mongoNotesRepository.findById(id)?.let {
+        return noteService.getNoteById(id)?.let {
             ResponseEntity(NotesResponse(it), HttpStatus.OK)
         } ?: ResponseEntity(HttpStatus.NOT_FOUND)
     }
