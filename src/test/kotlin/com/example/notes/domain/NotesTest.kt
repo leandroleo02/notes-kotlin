@@ -33,9 +33,7 @@ class NotesTest {
 
     @Test
     fun convertNotes() {
-        val notesConverted = notes.convert {
-            it.id
-        }
+        val notesConverted = notes.convert { it.id }
         assertThat(notesConverted).contains("1", "2", "3", "4", "5")
     }
 
