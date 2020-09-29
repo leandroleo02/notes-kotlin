@@ -4,10 +4,13 @@ import com.example.notes.domain.Note
 import com.example.notes.domain.Notes
 import com.example.notes.domain.NotesRepository
 import com.example.notes.infrastructure.documents.NoteDocument
+import org.springframework.context.annotation.Primary
+import org.springframework.context.annotation.Profile
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Repository
 
 @Repository
+@Profile("!dev")
 class MongoNotesRepository(private val mongoRepositoryDelegate: MongoRepositoryDelegate): NotesRepository {
 
     override fun retrieveAll(): Notes {
@@ -28,4 +31,5 @@ class MongoNotesRepository(private val mongoRepositoryDelegate: MongoRepositoryD
 }
 
 @Repository
+@Profile("!dev")
 interface MongoRepositoryDelegate: MongoRepository<NoteDocument, String>

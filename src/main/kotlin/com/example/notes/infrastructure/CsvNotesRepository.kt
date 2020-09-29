@@ -3,10 +3,12 @@ package com.example.notes.infrastructure
 import com.example.notes.domain.Note
 import com.example.notes.domain.Notes
 import com.example.notes.domain.NotesRepository
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Repository
 import java.io.InputStream
 
 @Repository
+@Profile("dev")
 class CsvNotesRepository(private val csvReader: CsvReader): NotesRepository {
 
     override fun retrieveAll(): Notes {

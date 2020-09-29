@@ -1,0 +1,7 @@
+[
+  { "title": "Learning", "category": "green", "text": "First Note in Kotlin" },
+  { "title": "Goku", "category": "orange", "text": "Olá, eu sou o Goku" },
+  { "title": "Tyrion", "category": "gold", "text": "I drink and I know things" },
+  { "title": "Funny", "category": "gold", "text": "His legs flail about as if independent from his body!" },
+  { "title": "Cold", "category": "white", "text": "Winter is coming!" }
+]

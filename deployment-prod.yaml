@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: notesapi
+  name: notesapi
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: notesapi
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: notesapi
+    spec:
+      containers:
+      - image: leandro/notes:k8s-mongo
+        env:
+        - name: SPRING_PROFILE
+          value: prod
+        imagePullPolicy: IfNotPresent
+        name: notesapi
+        resources: {}
+        ports:
+          - containerPort: 15000
+status: {}
+
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: task-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /data/mongo1
+    type: DirectoryOrCreate
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pv-claim
+  labels:
+    app: mongopv
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: manual
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+  labels:
+    appdb: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appdb: mongodb
+  template:
+    metadata:
+      labels:
+        appdb: mongodb
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:3.6.6
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: hostvol
+              mountPath: /data/db
+      volumes:
+        - name: hostvol
+          persistentVolumeClaim:
+            claimName: mongo-pv-claim
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  labels:
+    app: mongodb
+spec:
+  ports:
+    - port: 27017
+      protocol: TCP
+  selector:
+    appdb: mongodb

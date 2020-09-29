@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.PathVariable
 
 @Service
-class NoteService(private val mongoNotesRepository: NotesRepository) {
+class NoteService(private val notesRepository: NotesRepository) {
 
     companion object: Logging {
         val logger = logger()
@@ -17,11 +17,11 @@ class NoteService(private val mongoNotesRepository: NotesRepository) {
 
     fun retrieveNotes(): Notes {
         logger.info("Retrieving Notes")
-        return mongoNotesRepository.retrieveAll()
+        return notesRepository.retrieveAll()
     }
 
     fun getNoteById(@PathVariable("id") id: String): Note? {
         logger.info("Retrieving Note $id")
-        return mongoNotesRepository.findById(id)
+        return notesRepository.findById(id)
     }
 }
