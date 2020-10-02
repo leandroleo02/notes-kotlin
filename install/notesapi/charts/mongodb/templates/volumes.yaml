@@ -1,0 +1,30 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ include "mongodb.fullname" . }}
+  labels:
+    type: {{ .Values.volume.type }}
+spec:
+  storageClassName: {{ .Values.volume.storageclassname }}
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: {{ .Values.volume.capacity }}
+  hostPath:
+    path: /data/mongo1
+    type: DirectoryOrCreate
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.volume.chainname }}
+  labels:
+    app: mongopv
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: {{ .Values.volume.storageclassname }}
+  resources:
+    requests:
+      storage: {{ .Values.volume.capacity }}

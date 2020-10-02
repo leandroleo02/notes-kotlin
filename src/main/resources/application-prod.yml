@@ -4,4 +4,4 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://mongodb:27017/notesapi
+      uri: mongodb://notesapi-mongodb:27017/notesapi

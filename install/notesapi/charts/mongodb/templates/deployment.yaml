@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "notesapi.fullname" . }}
+  name: {{ include "mongodb.fullname" . }}
   labels:
-    {{- include "notesapi.labels" . | nindent 4 }}
+    {{- include "mongodb.labels" . | nindent 4 }}
 spec:
 {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
 {{- end }}
   selector:
     matchLabels:
-      {{- include "notesapi.selectorLabels" . | nindent 6 }}
+      {{- include "mongodb.selectorLabels" . | nindent 6 }}
   template:
     metadata:
     {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
-        {{- include "notesapi.selectorLabels" . | nindent 8 }}
+        {{- include "mongodb.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "notesapi.serviceAccountName" . }}
+      serviceAccountName: {{ include "mongodb.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -33,15 +33,17 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-          - name: SPRING_PROFILE
-            value: prod
           ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
+            - containerPort: 27017
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: hostvol
+              mountPath: /data/db
+      volumes:
+        - name: hostvol
+          persistentVolumeClaim:
+            claimName: {{ .Values.volume.chainname }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
